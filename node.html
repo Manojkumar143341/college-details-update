@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Navbar with 3 Dots</title>
+    <style>
+        /* Navbar styles */
+        .navbar {
+            position: relative;
+            padding: 10px;
+            background-color: #333;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        /* Style for the 3 dots button */
+        .menu-btn {
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Hidden by default, content that will show when clicked */
+        .menu-content {
+            display: none;
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .menu-content ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .menu-content li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .menu-content li:last-child {
+            border-bottom: none;
+        }
+
+        .menu-content a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* Hover effect */
+        .menu-content li:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <button class="menu-btn" id="menuButton">...</button>
+        <div class="menu-content" id="menuContent">
+            <!-- Dynamic menu items will be inserted here -->
+        </div>
+    </nav>
+
+    <script>
+        // Dynamic data for menu items
+        const menuItems = [
+            { name: "Option 1", link: "#option1" },
+            { name: "Option 2", link: "#option2" },
+            { name: "Option 3", link: "#option3" },
+            { name: "Option 4", link: "#option4" },
+        ];
+
+        // Function to generate menu dynamically
+        function generateMenu() {
+            const menuContent = document.getElementById("menuContent");
+            const menuList = document.createElement("ul");
+
+            menuItems.forEach(item => {
+                const menuItem = document.createElement("li");
+                const menuLink = document.createElement("a");
+                menuLink.href = item.link;
+                menuLink.textContent = item.name;
+                menuItem.appendChild(menuLink);
+                menuList.appendChild(menuItem);
+            });
+
+            // Clear and insert the new menu items
+            menuContent.innerHTML = "";
+            menuContent.appendChild(menuList);
+        }
+
+        // Toggle menu visibility on button click
+        document.getElementById("menuButton").addEventListener("click", function() {
+            const menu = document.getElementById("menuContent");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        });
+
+        // Optionally close the menu if clicked outside
+        window.addEventListener("click", function(event) {
+            const menu = document.getElementById("menuContent");
+            const menuButton = document.getElementById("menuButton");
+            if (!menu.contains(event.target) && event.target !== menuButton) {
+                menu.style.display = "none";
+            }
+        });
+
+        // Generate the menu when the page loads
+        generateMenu();
+    </script>
+
+</body>
+</html>
